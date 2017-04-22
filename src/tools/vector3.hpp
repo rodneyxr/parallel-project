@@ -23,6 +23,36 @@ public:
      */
     static double Distance(const Vector3 &v1, const Vector3 &v2);
 
+    /**
+     * @return the scalar triple product: (A x B) x C
+     */
+    static Vector3 TripleProduct(const Vector3 &a, const Vector3 &b, const Vector3 &c);
+
+    /**
+     * @return the dot product of the two vectors.
+     */
+    double Dot(const Vector3 &v) const;
+
+    /**
+     * @return a new negated Vector3 instance.
+     */
+    Vector3 Negate() const;
+
+    /**
+     * @return the cross product of this vector with v.
+     */
+    Vector3 Cross(const Vector3 &v) const;
+
+    /**
+     * @return the sum of all dimensions in this vector.
+     */
+    double Magnitude() const;
+
+    /**
+     * @return the unit vector (vector with a magnitude of 1).
+     */
+    Vector3 Unit() const;
+
     friend std::ostream &operator<<(std::ostream &os, const Vector3 &d) {
         os << "{" << d.x << "," << d.y << "," << d.z << "}";
         return os;
@@ -45,8 +75,16 @@ inline Vector3 operator*(const Vector3 &lhs, const Vector3 &rhs) {
     return Vector3{lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z};
 }
 
+inline Vector3 operator*(const Vector3 &lhs, const double &rhs) {
+    return Vector3{lhs.x * rhs, lhs.y * rhs, lhs.z * rhs};
+}
+
 inline Vector3 operator+(const Vector3 &lhs, const Vector3 &rhs) {
     return Vector3{lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z};
+}
+
+inline Vector3 operator-(const Vector3 &lhs, const Vector3 &rhs) {
+    return Vector3{lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z};
 }
 
 #endif //PARALLEL_VECTOR3_H
