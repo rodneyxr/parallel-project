@@ -4,6 +4,7 @@
 #include <vector>
 #include "../tools/vector3.hpp"
 
+
 /**
  * An Entity represents an object in the virtual environment. It contains a
  * set of points to make a convex shape in 3D space.

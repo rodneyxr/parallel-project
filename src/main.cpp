@@ -15,7 +15,7 @@ int main() {
     /* Helper class for generating varying shapes, positions and sizes */
     EntityGenerator gen(1000, 0);
 
-#if 0
+#if 1
     stop_watch watch;
     watch.start();
     #pragma omp parallel for
@@ -31,13 +31,13 @@ int main() {
     auto e1 = entity::cube;
     //auto e2 = entity::cube;
     Entity e2 = Entity(std::vector<Vector3>{Vector3{-2, -2, -2},
-                 Vector3{-1, -1, 1},
-                 Vector3{-1, 1, -1},
-                 Vector3{-1, 1, 1},
-                 Vector3{1, -1, -1},
-                 Vector3{1, -1, 1},
-                 Vector3{1, 1, -1},
-                 Vector3{2, 2, 2}});
+                                            Vector3{-1, -1, 1},
+                                            Vector3{-1, 1, -1},
+                                            Vector3{-1, 1, 1},
+                                            Vector3{1, -1, -1},
+                                            Vector3{1, -1, 1},
+                                            Vector3{1, 1, -1},
+                                            Vector3{2, 2, 2}});
     bool hit = gjk::Run(e2, e1);
     if (hit) // this should be true
         std::cout << "Test Passed" << std::endl;
@@ -45,13 +45,13 @@ int main() {
         std::cout << "Test Failed" << std::endl;
 
     e2 = Entity(std::vector<Vector3>{Vector3{0, -1, -1},
-                                            Vector3{0, -1, 1},
-                                            Vector3{0, 1, -1},
-                                            Vector3{0, 1, 1},
-                                            Vector3{2, -1, -1},
-                                            Vector3{2, -1, 1},
-                                            Vector3{2, 1, -1},
-                                            Vector3{2, 1, 1}});
+                                     Vector3{0, -1, 1},
+                                     Vector3{0, 1, -1},
+                                     Vector3{0, 1, 1},
+                                     Vector3{2, -1, -1},
+                                     Vector3{2, -1, 1},
+                                     Vector3{2, 1, -1},
+                                     Vector3{2, 1, 1}});
 
     hit = gjk::Run(e2, e1);
     if (hit) // this should be true
