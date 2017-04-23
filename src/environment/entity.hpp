@@ -38,5 +38,14 @@ namespace entity {
     }};
 }
 
+/* Operators */
+inline std::ostream& operator<<(std::ostream &os, const Entity &e) {
+    os << "Entity:" << std::endl;
+    for (auto &p : *e.GetPoints()) {
+        os << "\t" << p << std::endl;
+    }
+    return os;
+}
+
 
 #endif //PARALLEL_ENTITY_HPP

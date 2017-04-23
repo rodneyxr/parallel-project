@@ -18,7 +18,7 @@ public:
      *
      * @param ve_size the size of the virtual environment.
      */
-    EntityGenerator(unsigned int ve_size);
+    EntityGenerator(int ve_size) : EntityGenerator(ve_size, std::random_device()()) {};
 
     /**
      * Constructs an EntityGenerator object given the virtual environment
@@ -27,7 +27,7 @@ public:
      * @param ve_size The size of the virtual environment.
      * @param seed The random seed for the random engine.
      */
-    EntityGenerator(unsigned int ve_size, std::random_device::result_type seed);
+    EntityGenerator(int ve_size, std::random_device::result_type seed);
 
     /**
      * Sets the range of possible sizes for shapes generated in the virtual
@@ -45,7 +45,7 @@ public:
      *
      * @param ve_size The size of the virtual environment.
      */
-    void SetVirtualEnvironmentSize(unsigned int ve_size);
+    void SetVirtualEnvironmentSize(int ve_size);
 
     /**
      * Generates an entity representing a cube. The cube's center is within

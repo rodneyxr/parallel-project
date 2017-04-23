@@ -6,7 +6,7 @@
 #include "tools/stopwatch.h"
 #include "gjk/gjk.hpp"
 
-#define NUMBER_OF_ENTITIES 1000000
+#define NUMBER_OF_ENTITIES 1
 
 int main() {
     /* virtual_environment will hold all the entities */
@@ -22,6 +22,7 @@ int main() {
     for (int i = 0; i < NUMBER_OF_ENTITIES; i++) {
         Entity cube = gen.GenerateCube();
         virtual_environment.AddEntity(cube);
+        std::cout << cube << std::endl;
     }
     watch.stop();
     std::cout << watch << std::endl;
