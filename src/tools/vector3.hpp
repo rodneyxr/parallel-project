@@ -9,7 +9,9 @@ class Vector3 {
 public:
     double x, y, z;
 
-    Vector3() : Vector3(0.0, 0.0, 0.0) {};
+    Vector3() : Vector3(0.0) {};
+
+    Vector3(double xyz) : Vector3(xyz, xyz, xyz) {};
 
     Vector3(double x, double y, double z) : x(x), y(y), z(z) {}
 
@@ -71,12 +73,21 @@ namespace vec3 {
     static const Vector3 zero{0, 0, 0};
 }
 
+/* Operators */
 inline Vector3 operator*(const Vector3 &lhs, const Vector3 &rhs) {
     return Vector3{lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z};
 }
 
 inline Vector3 operator*(const Vector3 &lhs, const double &rhs) {
     return Vector3{lhs.x * rhs, lhs.y * rhs, lhs.z * rhs};
+}
+
+inline Vector3 operator/(const Vector3 &lhs, const Vector3 &rhs) {
+    return Vector3{lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z};
+}
+
+inline Vector3 operator/(const Vector3 &lhs, const double &rhs) {
+    return Vector3{lhs.x / rhs, lhs.y / rhs, lhs.z / rhs};
 }
 
 inline Vector3 operator+(const Vector3 &lhs, const Vector3 &rhs) {

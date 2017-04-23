@@ -15,6 +15,13 @@ public:
     Entity(std::vector<Vector3> points);
 
     const std::vector<Vector3> *GetPoints() const;
+
+    /**
+     * NOTE: this will break if entity has no points.
+     *
+     * @return the centroid for this entity.
+     */
+    Vector3 GetCentroid() const;
 };
 
 namespace entity {

@@ -34,5 +34,7 @@ double Vector3::Magnitude() const {
 
 Vector3 Vector3::Unit() const {
     double m = Magnitude();
+    if (m == 0)
+        return Vector3(0.0);
     return Vector3(x / m, y / m, z / m);
 }

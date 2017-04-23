@@ -36,15 +36,15 @@ bool gjk::Run(Entity &e1, Entity &e2) {
 
 Vector3 gjk::FindMaxPointInDirection(const Entity &entity, const Vector3 direction) {
     double max = -std::numeric_limits<double>::infinity();
-    Vector3 *max_vec = NULL;
+    Vector3 max_vec;
     for (auto &vec : *entity.GetPoints()) {
         double dot = vec.Dot(direction);
         if (dot > max) {
             max = dot;
-            *max_vec = vec;
+            max_vec = vec;
         }
     }
-    return *max_vec;
+    return max_vec;
 }
 
 Vector3 gjk::Support(const Entity &e1, const Entity &e2, const Vector3 direction) {
@@ -59,11 +59,11 @@ Vector3 gjk::Support(const Entity &e1, const Entity &e2, const Vector3 direction
 bool gjk::ContainsOrigin(Simplex &simplex, Vector3 &direction) {
     Vector3 a = simplex.GetLast();
     Vector3 ao = a.Negate();
-    if (simplex.Size() == 4) { // if #simplex == 4 then
+    if (simplex.Size() == 4) {
         // tetrahedron case
-        Vector3 b = simplex.Get(3);
-        Vector3 c = simplex.Get(2);
-        Vector3 d = simplex.Get(1);
+        Vector3 b = simplex.Get(2);
+        Vector3 c = simplex.Get(1);
+        Vector3 d = simplex.Get(0);
 
         // edge vectors
         Vector3 ab = b - a;
@@ -77,22 +77,22 @@ bool gjk::ContainsOrigin(Simplex &simplex, Vector3 &direction) {
 
         // check the if point is above or below surface normals of each face on the tetrahedron
         if (abc.Dot(ao) > 0) {
-            //table.remove(simplex, 4);
+            simplex.Remove(3);
             direction = abc;
-        } else if (acd.Dot(ao) > 0) { //    elseif dot(acd, ao) > 0 then
-            //    table.remove(simplex, 2);
+        } else if (acd.Dot(ao) > 0) {
+            simplex.Remove(1);
             direction = acd;
-        } else if (adb.Dot(ao) > 0) { //    elseif dot(adb, ao) > 0 then
-            //    table.remove(simplex, 3);
+        } else if (adb.Dot(ao) > 0) {
+            simplex.Remove(2);
             direction = adb;
         } else {
-            // was below all faces must be in tetrahedron!
+            // was below all faces; must be in tetrahedron
             return true;
         }
     } else if (simplex.Size() == 3) {
         // triangle case
-        Vector3 b = simplex.Get(2);
-        Vector3 c = simplex.Get(1);
+        Vector3 b = simplex.Get(1);
+        Vector3 c = simplex.Get(0);
 
         // edge vectors
         Vector3 ab = b - a;
@@ -105,11 +105,11 @@ bool gjk::ContainsOrigin(Simplex &simplex, Vector3 &direction) {
 
         if (abPerp.Dot(ao) > 0) {
             // remove the point not attached to the edge's normal
-            // table.remove(simplex, 1);
+            simplex.Remove(0);
             direction = abPerp;
         } else if (acPerp.Dot(ao) > 0) {
             // remove the point not attached to the edge's normal
-            // table.remove(simplex, 2);
+            simplex.Remove(1);
             direction = acPerp;
         } else {
             // it's within the triangle, but is it above or below?
@@ -121,10 +121,10 @@ bool gjk::ContainsOrigin(Simplex &simplex, Vector3 &direction) {
         }
     } else {
         // line segment case
-        Vector3 b = simplex.Get(1);
+        Vector3 b = simplex.Get(0);
         Vector3 ab = b - a;
         Vector3 bcPerp = Vector3::TripleProduct(ab, ao, ab).Unit();
         direction = bcPerp;
     }
-    return false; // return false, direction;
+    return false;
 }

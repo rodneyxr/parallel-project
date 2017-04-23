@@ -27,6 +27,16 @@ public:
     Vector3 Get(int index) { return supports[index]; }
 
     /**
+     * Removes a Vector3 from this simplex.
+     * NOTE: Index should be less than the size of the Simplex.
+     *
+     * @param index the index of the Vector3 to remove.
+     */
+    void Remove(int index) {
+        supports.erase(supports.begin() + index);
+    }
+
+    /**
      * @return The last support vector that was added to the Simplex.
      */
     Vector3 GetLast();

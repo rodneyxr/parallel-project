@@ -15,6 +15,7 @@ int main() {
     /* Helper class for generating varying shapes, positions and sizes */
     EntityGenerator gen(1000, 0);
 
+#if 0
     stop_watch watch;
     watch.start();
     #pragma omp parallel for
@@ -24,11 +25,16 @@ int main() {
     }
     watch.stop();
     std::cout << watch << std::endl;
+#endif
 
-    Entity cube1 = entity::cube;
-    Entity cube2 = entity::cube;
-    bool hit = gjk::Run(cube1, cube2);
-    std::cout << hit << std::endl;
+    // e1 and e2 are the same size, shape, and location so gjk should return true
+    auto e1 = entity::cube;
+    auto e2 = entity::cube;
+    bool hit = gjk::Run(e2, e1);
+    if (hit) // this should be true
+        std::cout << "Test Passed" << std::endl;
+    else
+        std::cout << "Test Failed" << std::endl;
 
     return 0;
 }
