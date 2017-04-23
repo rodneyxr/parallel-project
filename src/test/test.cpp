@@ -41,6 +41,8 @@ bool test2() {
         std::cout << "Test Passed" << std::endl;
     else
         std::cout << "Test Failed" << std::endl;
+
+    return hit;
 }
 
 void header(std::string s) {

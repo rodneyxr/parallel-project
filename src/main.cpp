@@ -16,10 +16,11 @@ int main() {
 
     stop_watch watch;
     watch.start();
-    #pragma omp parallel for
+//    #pragma omp parallel for
     for (int i = 0; i < NUMBER_OF_ENTITIES; i++) {
         Entity cube = gen.GenerateCube();
         virtual_environment.AddEntity(cube);
+        std::cout << cube << std::endl;
     }
     watch.stop();
     std::cout << watch << std::endl;
