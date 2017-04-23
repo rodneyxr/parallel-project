@@ -3,10 +3,6 @@
 #include <assert.h>
 #include <iostream>
 
-//EntityGenerator::EntityGenerator(unsigned int ve_size) {
-//    EntityGenerator(ve_size, std::random_device()());
-//}
-
 EntityGenerator::EntityGenerator(int ve_size, std::random_device::result_type seed) {
     this->random_engine = std::default_random_engine(seed);
     SetVirtualEnvironmentSize(ve_size);
