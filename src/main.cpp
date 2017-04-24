@@ -11,8 +11,8 @@ struct info_t {
     unsigned int collisions;
 };
 
-#define NUMBER_OF_ENTITIES 1000
-#define VE_SIZE 1000
+#define NUMBER_OF_ENTITIES 100
+#define VE_SIZE 100
 
 
 /*****************************************************************************
@@ -81,7 +81,7 @@ int main() {
     EntityGenerator gen(VE_SIZE, 0);
 
     std::cout << "Creating virtual environment..." << std::endl;
-#pragma omp parallel for
+//#pragma omp parallel for
     for (int i = 0; i < NUMBER_OF_ENTITIES; i++) {
         Entity cube = gen.GenerateCube();
         virtual_environment.AddEntity(cube);
@@ -109,7 +109,7 @@ int main() {
     reset_benchmark(info, watch);
     std::cout << "Running n2_openmp..." << std::endl;
     watch.start();
-    n2_openmp(info);
+//    n2_openmp(info);
     watch.stop();
     print_results(info, watch);
 

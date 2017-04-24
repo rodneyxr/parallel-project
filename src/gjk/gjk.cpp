@@ -1,4 +1,5 @@
 #include <limits>
+#include <iostream>
 #include "gjk.hpp"
 
 bool gjk::Run(Entity &e1, Entity &e2) {
@@ -13,8 +14,11 @@ bool gjk::Run(Entity &e1, Entity &e2) {
     // negate d for the next point
     d = d.Negate();
 
+    int debug_counter = 0;
     // start looping
     while (true) {
+        debug_counter++;
+        if (debug_counter == 3) return true;
         // add a new point to the simplex because we haven't terminated yet
         simplex.Add(Support(e1, e2, d));
         // make sure that the last point we added actually passed the origin

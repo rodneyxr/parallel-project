@@ -23,7 +23,6 @@ class stop_watch {
 
 public:
     void start() {
-        reset();
         this->time_start = clock();
     }
 

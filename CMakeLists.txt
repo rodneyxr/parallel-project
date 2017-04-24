@@ -18,5 +18,8 @@ add_cxx_compiler_flag(-Wall)
 add_cxx_compiler_flag(-pthread)
 add_cxx_compiler_flag(-fopenmp)
 
-set(SOURCE_FILES src/main.cpp src/tools/vector3.cpp src/tools/vector3.hpp src/tools/stopwatch.h src/environment/entity.cpp src/environment/entity.hpp src/environment/virtualenvironment.cpp src/environment/virtualenvironment.hpp src/tools/entitygenerator.cpp src/tools/entitygenerator.hpp src/gjk/gjk.cpp src/gjk/gjk.hpp src/gjk/simplex.cpp src/gjk/simplex.hpp)
+set(SOURCE_FILES src/main.cpp src/tools/vector3.cpp src/tools/vector3.hpp src/tools/stopwatch.h src/environment/entity.cpp src/environment/entity.hpp src/environment/virtualenvironment.cpp src/environment/virtualenvironment.hpp src/tools/entitygenerator.cpp src/tools/entitygenerator.hpp src/gjk/gjk.cpp src/gjk/gjk.hpp src/gjk/simplex.cpp src/gjk/simplex.hpp src/aabb/aabb.cpp src/aabb/aabb.h)
 add_executable(parallel ${SOURCE_FILES})
+
+set(TEST_SOURCE_FILES src/test/test.cpp src/tools/vector3.cpp src/tools/vector3.hpp src/tools/stopwatch.h src/environment/entity.cpp src/environment/entity.hpp src/environment/virtualenvironment.cpp src/environment/virtualenvironment.hpp src/tools/entitygenerator.cpp src/tools/entitygenerator.hpp src/gjk/gjk.cpp src/gjk/gjk.hpp src/gjk/simplex.cpp src/gjk/simplex.hpp src/aabb/aabb.cpp src/aabb/aabb.h)
+add_executable(tests ${TEST_SOURCE_FILES})
