@@ -3,18 +3,14 @@
 #include <assert.h>
 #include <iostream>
 
-EntityGenerator::EntityGenerator(unsigned int ve_size) {
-    EntityGenerator(ve_size, std::random_device()());
-}
-
-EntityGenerator::EntityGenerator(unsigned int ve_size, std::random_device::result_type seed) {
+EntityGenerator::EntityGenerator(int ve_size, std::random_device::result_type seed) {
     this->random_engine = std::default_random_engine(seed);
     SetVirtualEnvironmentSize(ve_size);
     SetEntitySizeRange(5, 15);
 }
 
-void EntityGenerator::SetVirtualEnvironmentSize(unsigned int ve_size) {
-    this->pos_distribution = std::uniform_real_distribution<double>(ve_size, -ve_size);
+void EntityGenerator::SetVirtualEnvironmentSize(int ve_size) {
+    this->pos_distribution = std::uniform_real_distribution<double>(-ve_size, ve_size);
 }
 
 void EntityGenerator::SetEntitySizeRange(int min_size, int max_size) {
@@ -26,8 +22,6 @@ void EntityGenerator::SetEntitySizeRange(int min_size, int max_size) {
 Entity EntityGenerator::GenerateCube() {
     Vector3 center = RandomVector();
     double size = size_distribution(random_engine) / 2;
-//    auto center = vec3::zero;
-//    double size = .5;
 
     std::vector<Vector3> points;
     Vector3 size_vec = Vector3{size, size, size};

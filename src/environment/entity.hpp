@@ -4,6 +4,7 @@
 #include <vector>
 #include "../tools/vector3.hpp"
 
+
 /**
  * An Entity represents an object in the virtual environment. It contains a
  * set of points to make a convex shape in 3D space.
@@ -15,6 +16,13 @@ public:
     Entity(std::vector<Vector3> points);
 
     const std::vector<Vector3> *GetPoints() const;
+
+    /**
+     * NOTE: this will break if entity has no points.
+     *
+     * @return the centroid for this entity.
+     */
+    Vector3 GetCentroid() const;
 };
 
 namespace entity {
@@ -28,6 +36,15 @@ namespace entity {
             Vector3{1, 1, -1},
             Vector3{1, 1, 1}
     }};
+}
+
+/* Operators */
+inline std::ostream& operator<<(std::ostream &os, const Entity &e) {
+    os << "Entity:" << std::endl;
+    for (auto &p : *e.GetPoints()) {
+        os << "\t" << p << std::endl;
+    }
+    return os;
 }
 
 
