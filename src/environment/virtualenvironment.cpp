@@ -6,6 +6,6 @@ void VirtualEnvironment::AddEntity(Entity entity) {
     this->mutex.unlock();
 }
 
-const std::vector<Entity> *VirtualEnvironment::GetEntities() const {
-    return (const std::vector<Entity> *) &entities;
+std::vector<Entity> *VirtualEnvironment::GetEntities() {
+    return &entities;
 }

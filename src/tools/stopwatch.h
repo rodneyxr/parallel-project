@@ -18,23 +18,21 @@
 class stop_watch {
 
     double elapsedTime = -1;
-    clock_t time_start = 0;
-    clock_t time_stop = 0;
+    std::chrono::steady_clock::time_point time_start;
+    std::chrono::steady_clock::time_point time_stop;
 
 public:
     void start() {
-        this->time_start = clock();
+        this->time_start = std::chrono::steady_clock::now();
     }
 
     void stop() {
-        this->time_stop = clock();
-        elapsedTime = double(time_stop - time_start) / CLOCKS_PER_SEC;
+        this->time_stop = std::chrono::steady_clock::now();
+        elapsedTime = std::chrono::duration_cast<std::chrono::nanoseconds> (time_stop - time_start).count() / 1000000000.0;
     }
 
     void reset() {
         this->elapsedTime = -1;
-        this->time_start = 0;
-        this->time_stop = 0;
     }
 
     double get_seconds() {
@@ -43,7 +41,7 @@ public:
 
 public:
     friend std::ostream &operator<<(std::ostream &os, const stop_watch &watch) {
-        os << "Elapsed Time: " << watch.elapsedTime;
+        os << "Elapsed Time: " << watch.elapsedTime << " seconds.";
         return os;
     }
 

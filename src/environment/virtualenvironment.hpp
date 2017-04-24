@@ -20,7 +20,7 @@ public:
 
     void AddEntity(Entity entity);
 
-    const std::vector<Entity> *GetEntities() const;
+    std::vector<Entity> *GetEntities();
 };
 
 
