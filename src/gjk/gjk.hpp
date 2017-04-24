@@ -9,7 +9,7 @@
 class gjk {
 
 public:
-    static bool Run(Entity &e1, Entity &e2);
+    static bool Run(const Entity &e1, const Entity &e2);
 
 private:
     /**

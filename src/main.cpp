@@ -2,12 +2,13 @@
 #include <random>
 #include <functional>
 #include <ctime>
+#include <thread>
 #include "tools/entitygenerator.hpp"
 #include "tools/stopwatch.h"
 #include "aabb/aabb.h"
 #include "gjk/gjk.hpp"
 
-#define NUMBER_OF_ENTITIES 5000
+#define NUMBER_OF_ENTITIES 1000
 #define VE_SIZE 1000
 
 
@@ -53,6 +54,64 @@ void gjk_n2_openmp() {
     }
 }
 
+void gjk_n2_cppthread8() {
+    unsigned long n = 8; // number of threads
+    std::vector<Entity> entities = *virtual_environment.GetEntities();
+    unsigned long size = entities.size();
+    std::thread *t = new std::thread[n];
+    unsigned long work_part = (unsigned long) floor((float) size / (float)n);
+
+    // run n threads
+    for (unsigned long i = 0; i < n; i++) {
+        unsigned long start = i * work_part;
+        unsigned long end = start + work_part;
+        t[i] = std::thread([start, end, entities, size] {
+            for (unsigned long j = start; j < end; j++) {
+                Entity e1 = entities[j];
+                for (unsigned long k = j + 1; k < size; k++) {
+                    if (j == k) continue;
+                    Entity e2 = entities[k];
+                    gjk::Run(e1, e2);
+                }
+            }
+        });
+    }
+
+    // join the threads
+    for (unsigned long i = 0; i < n; i++) {
+        t[i].join();
+    }
+}
+
+void gjk_n2_cppthread16() {
+    unsigned long n = 16; // number of threads
+    std::vector<Entity> entities = *virtual_environment.GetEntities();
+    unsigned long size = entities.size();
+    std::thread *t = new std::thread[n];
+    unsigned long work_part = (unsigned long) floor((float) size / (float)n);
+
+    // run n threads
+    for (unsigned long i = 0; i < n; i++) {
+        unsigned long start = i * work_part;
+        unsigned long end = start + work_part;
+        t[i] = std::thread([start, end, entities, size] {
+            for (unsigned long j = start; j < end; j++) {
+                Entity e1 = entities[j];
+                for (unsigned long k = j + 1; k < size; k++) {
+                    if (j == k) continue;
+                    Entity e2 = entities[k];
+                    gjk::Run(e1, e2);
+                }
+            }
+        });
+    }
+
+    // join the threads
+    for (unsigned long i = 0; i < n; i++) {
+        t[i].join();
+    }
+}
+
 void aabb_n2_sequential() {
     std::vector<Entity> entities = *virtual_environment.GetEntities();
     unsigned long size = entities.size();
@@ -80,6 +139,65 @@ void aabb_n2_openmp() {
             Entity e2 = entities[k];
             aabb::Run(e1, e2);
         }
+    }
+}
+
+void aabb_n2_cppthread8() {
+    unsigned long n = 8; // number of threads
+    std::vector<Entity> entities = *virtual_environment.GetEntities();
+    unsigned long size = entities.size();
+    std::thread *t = new std::thread[n];
+    unsigned long work_part = (unsigned long) floor((float) size / (float)n);
+
+
+    // run n threads
+    for (unsigned long i = 0; i < n; i++) {
+        unsigned long start = i * work_part;
+        unsigned long end = start + work_part;
+        t[i] = std::thread([start, end, entities, size] {
+            for (unsigned long j = start; j < end; j++) {
+                Entity e1 = entities[j];
+                for (unsigned long k = j + 1; k < size; k++) {
+                    if (j == k) continue;
+                    Entity e2 = entities[k];
+                    aabb::Run(e1, e2);
+                }
+            }
+        });
+    }
+
+    // join the threads
+    for (unsigned long i = 0; i < n; i++) {
+        t[i].join();
+    }
+}
+
+void aabb_n2_cppthread16() {
+    unsigned long n = 16; // number of threads
+    std::vector<Entity> entities = *virtual_environment.GetEntities();
+    unsigned long size = entities.size();
+    std::thread *t = new std::thread[n];
+    unsigned long work_part = (unsigned long) floor((float) size / (float)n);
+
+    // run n threads
+    for (unsigned long i = 0; i < n; i++) {
+        unsigned long start = i * work_part;
+        unsigned long end = start + work_part;
+        t[i] = std::thread([start, end, entities, size] {
+            for (unsigned long j = start; j < end; j++) {
+                Entity e1 = entities[j];
+                for (unsigned long k = j + 1; k < size; k++) {
+                    if (j == k) continue;
+                    Entity e2 = entities[k];
+                    aabb::Run(e1, e2);
+                }
+            }
+        });
+    }
+
+    // join the threads
+    for (unsigned long i = 0; i < n; i++) {
+        t[i].join();
     }
 }
 
@@ -129,8 +247,13 @@ int main() {
     // Run the benchmarks
     benchmark("gjk_n2_sequential", gjk_n2_sequential);
     benchmark("gjk_n2_openmp", gjk_n2_openmp);
+    benchmark("gjk_n2_cppthread 8 threads", gjk_n2_cppthread8);
+    benchmark("gjk_n2_cppthread 16 threads", gjk_n2_cppthread16);
+
     benchmark("aabb_n2_sequential", aabb_n2_sequential);
     benchmark("aabb_n2_openmp", aabb_n2_openmp);
+    benchmark("aabb_n2_cppthread 8 threads", aabb_n2_cppthread8);
+    benchmark("aabb_n2_cppthread 16 threads", aabb_n2_cppthread16);
 
     std::cout << std::endl;
     std::cout << std::endl;

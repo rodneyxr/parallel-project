@@ -2,7 +2,7 @@
 #include <iostream>
 #include "gjk.hpp"
 
-bool gjk::Run(Entity &e1, Entity &e2) {
+bool gjk::Run(const Entity &e1, const Entity &e2) {
     Simplex simplex;
 
     // choose a search direction
